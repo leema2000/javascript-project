@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Validation</title>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      background-color: #a07aa2;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #eec2de;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2 class="text-center mb-4">Validation Form</h2>
+    <form id="userForm" novalidate>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name*</label>
+        <input type="text" class="form-control" id="name" required />
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number*</label>
+        <input type="tel" class="form-control" id="phone" required />
+      </div>
+      <div class="mb-3">
+        <label for="age" class="form-label">Age*</label>
+        <input type="number" class="form-control" id="age" required min="1" />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email*</label>
+        <input type="email" class="form-control" id="email" required />
+      </div>
+      <div class="mb-3">
+        <label for="salary" class="form-label">Salary*</label>
+        <input type="number" class="form-control" id="salary" required />
+      </div>
+      <div class="mb-3">
+        <label for="pincode" class="form-label">Pin Code*</label>
+        <input type="text" class="form-control" id="pincode" required />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password*</label>
+        <input type="password" class="form-control" id="password" required />
+      </div>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password*</label>
+        <input type="password" class="form-control" id="confirmPassword" required />
+      </div>
+      <button type="submit" class="btn btn-dark w-100">Submit</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JavaScript -->
+  <script>
+    document.getElementById("userForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Get form values
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const age = parseInt(document.getElementById("age").value.trim());
+      const email = document.getElementById("email").value.trim();
+      const salary = parseFloat(document.getElementById("salary").value.trim());
+      const pincode = document.getElementById("pincode").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      // Patterns
+      const phonePattern = /^[0-9]{10}$/;
+      const pinPattern = /^[0-9]{6}$/;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
+      if (!name || name.length < 2) {
+        alert("Please enter a valid name (at least 2 characters).");
+        return;
+      }
+
+      if (!phonePattern.test(phone)) {
+        alert("Phone number must be 10 digits.");
+        return;
+      }
+
+      if (isNaN(age) || age < 1 || age > 120) {
+        alert("Enter a valid age (1-120).");
+        return;
+      }
+
+      if (!emailPattern.test(email)) {
+        alert("Enter a valid email address.");
+        return;
+      }
+
+      if (isNaN(salary) || salary < 0) {
+        alert("Enter a valid salary amount.");
+        return;
+      }
+
+      if (!pinPattern.test(pincode)) {
+        alert("Pin code must be 6 digits.");
+        return;
+      }
+
+      if (!passwordPattern.test(password)) {
+        alert("Password must be at least 6 characters and alphanumeric.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      // Success
+      alert("Form submitted successfully!");
+      this.reset();
+    });
+  </script>
+</body>
+</html>
+
